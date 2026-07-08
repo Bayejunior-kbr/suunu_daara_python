@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Liste des Talibés{% endblock %}
+
+{% block content %}
+    <h1>Liste des Talibés</h1>
+
+    <a href="{{ url_for('talibe.ajouter') }}" class="btn btn-primary mb-3">+ Ajouter un talibé</a>
+
+    <!-- Formulaire de recherche -->
+    <form method="GET" action="{{ url_for('talibe.rechercher') }}" class="mb-3">
+        <input type="text" name="q" placeholder="Rechercher par nom..." value="{{ recherche or '' }}">
+        <button type="submit" class="btn btn-secondary">Rechercher</button>
+    </form>
+
+    <a href="{{ url_for('talibe.export_csv') }}" class="btn btn-success mb-3">Exporter en CSV</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>telephone_tuteur</th>
+                <th>date_naissance </th>
+                <th>adresse</th>
+                <th>Classe</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in talibes %}
+            <tr>
+                <td>{{ t.nom }}</td>
+                <td>{{ t.prenom }}</td>
+                <td>{{ t.telephone_tuteur }}</td>
+                <td>{{ t.date_naissance }}</td>
+                 <td>{{ t.adresse }}</td>
+                <td>{{ t.classe.nom if t.classe else "—" }}</td>
+                <td>
+                    <a href="{{ url_for('talibe.modifier', id=t.id) }}" class="btn btn-sm btn-warning">Modifier</a>
+
+                    <form method="POST" action="{{ url_for('talibe.supprimer', id=t.id) }}" style="display:inline;"
+                          onsubmit="return confirm('Supprimer ce talibé ?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">Aucun talibé trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

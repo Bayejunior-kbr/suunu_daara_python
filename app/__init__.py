@@ -9,4 +9,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app,db)
 
+    from app.views.talibe import talibes_bp
+    app.register_blueprint(talibes_bp)
+
     return app
