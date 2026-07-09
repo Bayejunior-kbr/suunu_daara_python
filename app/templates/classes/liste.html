@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Classes</h1>
+
+<form method="get" action="{{ url_for('classes.lister') }}" class="mb-3 d-flex gap-2">
+    <input type="text" name="q" value="{{ q }}" placeholder="Rechercher (libellé, niveau)" class="form-control">
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+    <a href="{{ url_for('classes.lister') }}" class="btn btn-secondary">Réinitialiser</a>
+    <a href="{{ url_for('classes.exporter', q=q) }}" class="btn btn-outline-success">Exporter CSV</a>
+</form>
+
+<a href="{{ url_for('classes.ajouter') }}" class="btn btn-success mb-3">+ Ajouter une classe</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Libellé</th>
+            <th>Niveau</th>
+            <th>Maître</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in classes %}
+        <tr>
+            <td>{{ c.code }}</td>
+            <td>{{ c.libelle }}</td>
+            <td>{{ c.niveau }}</td>
+            <td>{{ c.maitre.prenom }} {{ c.maitre.nom }}</td>
+            <td>
+                <a href="{{ url_for('classes.modifier', code=c.code) }}">Modifier</a>
+                <form method="post" action="{{ url_for('classes.supprimer', code=c.code) }}" style="display:inline;">
+                    {{ csrf_token() if csrf_token is defined }}
+                    <button type="submit" onclick="return confirm('Supprimer cette classe ?')">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">Aucune classe trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
