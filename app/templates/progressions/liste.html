@@ -1,0 +1,118 @@
+<h1>Liste des progressions</h1>
+
+
+<a href="{{ url_for('progressions.creer') }}">
+    Nouvelle progression
+</a>
+
+&nbsp;&nbsp;
+
+<a href="{{ url_for('progressions.export_csv') }}">
+    Exporter CSV
+</a>
+
+
+<br><br>
+
+
+<!-- Recherche -->
+<form method="GET" action="{{ url_for('progressions.lister') }}">
+
+    <input 
+        type="text" 
+        name="q" 
+        placeholder="Rechercher une sourate ou un talibé"
+    >
+
+    <button type="submit">
+        Rechercher
+    </button>
+
+</form>
+
+
+<br>
+
+
+<table border="1">
+
+    <tr>
+        <th>ID</th>
+        <th>Talibé</th>
+        <th>Sourate</th>
+        <th>Versets</th>
+        <th>Date</th>
+        <th>Observations</th>
+        <th>Actions</th>
+    </tr>
+
+
+    {% for p in progressions %}
+
+    <tr>
+
+        <td>
+            {{ p.id }}
+        </td>
+
+
+        <td>
+            {{ p.talibe.prenom }}
+            {{ p.talibe.nom }}
+        </td>
+
+
+        <td>
+            {{ p.sourate }}
+        </td>
+
+
+        <td>
+            {{ p.nombre_versets }}
+        </td>
+
+
+        <td>
+            {{ p.date_evaluation }}
+        </td>
+
+
+        <td>
+            {{ p.observations }}
+        </td>
+
+
+        <td>
+
+            <a href="{{ url_for('progressions.modifier', id=p.id) }}">
+                Modifier
+            </a>
+
+
+            |
+
+
+            <a 
+            href="{{ url_for('progressions.supprimer', id=p.id) }}"
+            onclick="return confirm('Voulez-vous supprimer cette progression ?');">
+                Supprimer
+            </a>
+
+        </td>
+
+    </tr>
+
+
+    {% else %}
+
+    <tr>
+        <td colspan="7">
+            Aucune progression trouvée
+        </td>
+    </tr>
+
+
+    {% endfor %}
+
+
+</table>
