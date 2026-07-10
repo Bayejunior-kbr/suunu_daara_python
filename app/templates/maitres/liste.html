@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titre %}Maîtres{% endblock %}
+
+{% block contenu %}
+    <div class="page-entete">
+        <h1>Liste des maîtres</h1>
+        <a class="bouton bouton-principal" href="{{ url_for('maitres.creer') }}">+ Nouveau maître</a>
+    </div>
+
+    <form method="get" class="barre-recherche">
+        <input type="text" name="q" value="{{ q }}" placeholder="Rechercher par nom, prénom ou matricule...">
+        <button type="submit" class="bouton">Rechercher</button>
+        {% if q %}
+            <a class="bouton bouton-secondaire" href="{{ url_for('maitres.lister') }}">Réinitialiser</a>
+        {% endif %}
+        <a class="bouton bouton-secondaire" href="{{ url_for('maitres.exporter', q=q) }}">⬇ Exporter CSV</a>
+    </form>
+
+    <table class="tableau">
+        <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Classes encadrées</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in maitres %}
+            <tr>
+                <td>{{ m.matricule }}</td>
+                <td>{{ m.prenom }}</td>
+                <td>{{ m.nom }}</td>
+                <td>{{ m.telephone or "—" }}</td>
+                <td>{{ m.classes|length }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('maitres.modifier', matricule=m.matricule) }}">Modifier</a>
+                    <form method="post" action="{{ url_for('maitres.supprimer', matricule=m.matricule) }}"
+                          onsubmit="return confirm('Supprimer le maître {{ m.nom_complet() }} ?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="lien-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="tableau-vide">Aucun maître trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

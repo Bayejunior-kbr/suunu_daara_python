@@ -1,0 +1,181 @@
+:root {
+    --couleur-primaire: #1a5276;
+    --couleur-primaire-fonce: #123a54;
+    --couleur-accent: #d4a017;
+    --couleur-fond: #f5f7fa;
+    --couleur-texte: #2c3e50;
+    --couleur-bordure: #dfe4ea;
+    --couleur-succes: #1e8449;
+    --couleur-danger: #c0392b;
+    --rayon: 6px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--couleur-fond);
+    color: var(--couleur-texte);
+    line-height: 1.5;
+}
+
+.navbar {
+    background: var(--couleur-primaire);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 2rem;
+}
+
+.navbar-brand a {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.navbar-links a {
+    color: #eaf2f8;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.navbar-links a:hover { text-decoration: underline; }
+.navbar-links a.disabled { color: #7fa5bd; cursor: not-allowed; }
+.navbar-links a.disabled:hover { text-decoration: none; }
+
+.conteneur {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    min-height: 60vh;
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.hero h1 { color: var(--couleur-primaire-fonce); }
+
+.page-entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.page-entete h1 { margin: 0; font-size: 1.6rem; color: var(--couleur-primaire-fonce); }
+
+.bouton {
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--rayon);
+    text-decoration: none;
+    font-size: 0.92rem;
+    border: none;
+    cursor: pointer;
+}
+
+.bouton-principal { background: var(--couleur-primaire); color: white; }
+.bouton-principal:hover { background: var(--couleur-primaire-fonce); }
+
+.bouton-secondaire { background: white; color: var(--couleur-primaire); border: 1px solid var(--couleur-bordure); }
+.bouton-secondaire:hover { background: #eef2f7; }
+
+.barre-recherche {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.barre-recherche input[type="text"] {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--couleur-bordure);
+    border-radius: var(--rayon);
+}
+
+.tableau {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--rayon);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.tableau th, .tableau td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.tableau th {
+    background: var(--couleur-primaire-fonce);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.tableau tbody tr:hover { background: #f0f4f8; }
+.tableau-vide { text-align: center; color: #888; font-style: italic; }
+
+.actions { display: flex; gap: 0.8rem; align-items: center; }
+.actions a { color: var(--couleur-primaire); text-decoration: none; font-size: 0.9rem; }
+.actions a:hover { text-decoration: underline; }
+
+.lien-danger {
+    background: none;
+    border: none;
+    color: var(--couleur-danger);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    text-decoration: none;
+}
+.lien-danger:hover { text-decoration: underline; }
+
+.formulaire {
+    background: white;
+    padding: 1.8rem;
+    border-radius: var(--rayon);
+    max-width: 480px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.champ { margin-bottom: 1.1rem; display: flex; flex-direction: column; }
+.champ label { font-weight: 600; margin-bottom: 0.35rem; font-size: 0.9rem; }
+.champ input {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--couleur-bordure);
+    border-radius: var(--rayon);
+    font-size: 0.95rem;
+}
+.champ input.lecture-seule { background: #f0f0f0; color: #666; }
+.champ small { color: #888; margin-top: 0.25rem; font-size: 0.8rem; }
+.erreur-champ { color: var(--couleur-danger); font-size: 0.82rem; margin-top: 0.25rem; }
+
+.actions-formulaire { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+
+.flash-liste { margin-bottom: 1.2rem; }
+.flash {
+    padding: 0.7rem 1rem;
+    border-radius: var(--rayon);
+    margin-bottom: 0.6rem;
+    font-size: 0.92rem;
+}
+.flash-success { background: #d5f5e3; color: var(--couleur-succes); border: 1px solid #a9dfbf; }
+.flash-danger { background: #fadbd8; color: var(--couleur-danger); border: 1px solid #f1948a; }
+
+.footer {
+    text-align: center;
+    padding: 1.2rem;
+    color: #888;
+    font-size: 0.85rem;
+}

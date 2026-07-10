@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titre %}Accueil{% endblock %}
+
+{% block contenu %}
+    <section class="hero">
+        <h1>Gestion de la Daara</h1>
+        <p>Système de gestion des maîtres, classes, talibés et de leur progression coranique.</p>
+        <a class="bouton bouton-principal" href="{{ url_for('maitres.lister') }}">Gérer les maîtres →</a>
+    </section>
+{% endblock %}

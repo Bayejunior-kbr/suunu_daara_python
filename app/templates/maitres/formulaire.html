@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titre %}{{ "Modifier" if maitre else "Nouveau" }} maître{% endblock %}
+
+{% block contenu %}
+    <div class="page-entete">
+        <h1>{{ "Modifier le maître" if maitre else "Nouveau maître" }}</h1>
+    </div>
+
+    <form method="post" class="formulaire">
+        {{ form.hidden_tag() }}
+
+        <div class="champ">
+            {{ form.matricule.label }}
+            {% if maitre %}
+                {{ form.matricule(readonly=true, class_="lecture-seule") }}
+                <small>Le matricule ne peut pas être modifié.</small>
+            {% else %}
+                {{ form.matricule() }}
+            {% endif %}
+            {% for erreur in form.matricule.errors %}
+                <span class="erreur-champ">{{ erreur }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="champ">
+            {{ form.prenom.label }}
+            {{ form.prenom() }}
+            {% for erreur in form.prenom.errors %}
+                <span class="erreur-champ">{{ erreur }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="champ">
+            {{ form.nom.label }}
+            {{ form.nom() }}
+            {% for erreur in form.nom.errors %}
+                <span class="erreur-champ">{{ erreur }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="champ">
+            {{ form.telephone.label }}
+            {{ form.telephone() }}
+            {% for erreur in form.telephone.errors %}
+                <span class="erreur-champ">{{ erreur }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="actions-formulaire">
+            {{ form.submit(class_="bouton bouton-principal") }}
+            <a class="bouton bouton-secondaire" href="{{ url_for('maitres.lister') }}">Annuler</a>
+        </div>
+    </form>
+{% endblock %}

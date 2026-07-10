@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}Daara{% endblock %} — Gestion de la Daara</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-brand">
+            <a href="{{ url_for('main.accueil') }}">🕌 Daara</a>
+        </div>
+        <nav class="navbar-links">
+            <a href="{{ url_for('main.accueil') }}">Accueil</a>
+            <a href="{{ url_for('maitres.lister') }}">Maîtres</a>
+            <a href="#" class="disabled" title="Module de l'équipe">Classes</a>
+            <a href="#" class="disabled" title="Module de l'équipe">Talibés</a>
+            <a href="#" class="disabled" title="Module de l'équipe">Progressions</a>
+        </nav>
+    </header>
+
+    <main class="conteneur">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-liste">
+                    {% for categorie, message in messages %}
+                        <div class="flash flash-{{ categorie }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block contenu %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Projet d'examen Flask — Gestion d'une Daara — ISI L2 GL</p>
+    </footer>
+</body>
+</html>
