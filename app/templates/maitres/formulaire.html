@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ "Modifier" if maitre else "Nouveau" }} maître{% endblock %}
+
+{% block content %}
+    <h1>{{ "Modifier le maître" if maitre else "Nouveau maître" }}</h1>
+
+    <form method="post" class="col-md-6">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.matricule.label(class="form-label") }}
+            {% if maitre %}
+                {{ form.matricule(readonly=true, class="form-control-plaintext") }}
+                <small class="text-muted">Le matricule ne peut pas être modifié.</small>
+            {% else %}
+                {{ form.matricule(class="form-control") }}
+            {% endif %}
+            {% for erreur in form.matricule.errors %}
+                <div class="text-danger">{{ erreur }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.prenom.label(class="form-label") }}
+            {{ form.prenom(class="form-control") }}
+            {% for erreur in form.prenom.errors %}
+                <div class="text-danger">{{ erreur }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.nom.label(class="form-label") }}
+            {{ form.nom(class="form-control") }}
+            {% for erreur in form.nom.errors %}
+                <div class="text-danger">{{ erreur }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.telephone.label(class="form-label") }}
+            {{ form.telephone(class="form-control") }}
+            {% for erreur in form.telephone.errors %}
+                <div class="text-danger">{{ erreur }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex gap-2">
+            {{ form.submit(class="btn btn-primary") }}
+            <a class="btn btn-secondary" href="{{ url_for('maitres.lister') }}">Annuler</a>
+        </div>
+    </form>
+{% endblock %}

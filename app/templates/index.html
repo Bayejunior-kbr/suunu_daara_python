@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <h1>Gestion de la Daara</h1>
+        <p class="lead">Système de gestion des maîtres, classes, talibés et de leur progression coranique.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Maîtres</h5>
+                    <p class="card-text">Gérer les serignes qui encadrent les classes.</p>
+                    <a href="{{ url_for('maitres.lister') }}" class="btn btn-primary">Gérer les maîtres →</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Classes</h5>
+                    <p class="card-text">Gérer les halqas et leur maître référent.</p>
+                    <a href="{{ url_for('classes.lister') }}" class="btn btn-primary">Gérer les classes →</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Talibés</h5>
+                    <p class="card-text">Gérer les talibés et leur classe d'affectation.</p>
+                    <a href="{{ url_for('talibes.liste') }}" class="btn btn-primary">Gérer les talibés →</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Progressions</h5>
+                    <p class="card-text">Suivre la mémorisation du Coran par talibé.</p>
+                    <a href="{{ url_for('progressions.lister') }}" class="btn btn-primary">Voir les progressions →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

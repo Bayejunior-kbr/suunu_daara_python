@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Progression{% endblock %}
+
+{% block content %}
+
+<h1>{{ "Modifier la progression" if progression else "Ajouter une progression" }}</h1>
+
+
+<form method="POST" class="col-md-6">
+
+{{ form.hidden_tag() }}
+
+
+<div class="mb-3">
+{{ form.sourate.label(class="form-label") }}
+{{ form.sourate(class="form-control") }}
+{% for erreur in form.sourate.errors %}
+    <div class="text-danger">{{ erreur }}</div>
+{% endfor %}
+</div>
+
+
+<div class="mb-3">
+{{ form.nombre_versets.label(class="form-label") }}
+{{ form.nombre_versets(class="form-control") }}
+{% for erreur in form.nombre_versets.errors %}
+    <div class="text-danger">{{ erreur }}</div>
+{% endfor %}
+</div>
+
+
+<div class="mb-3">
+{{ form.date_evaluation.label(class="form-label") }}
+{{ form.date_evaluation(class="form-control") }}
+{% for erreur in form.date_evaluation.errors %}
+    <div class="text-danger">{{ erreur }}</div>
+{% endfor %}
+</div>
+
+
+<div class="mb-3">
+{{ form.observations.label(class="form-label") }}
+{{ form.observations(class="form-control") }}
+</div>
+
+
+<div class="mb-3">
+{{ form.talibe_matricule.label(class="form-label") }}
+{{ form.talibe_matricule(class="form-select") }}
+{% for erreur in form.talibe_matricule.errors %}
+    <div class="text-danger">{{ erreur }}</div>
+{% endfor %}
+</div>
+
+
+<div class="d-flex gap-2">
+{{ form.submit(class="btn btn-primary") }}
+<a href="{{ url_for('progressions.lister') }}" class="btn btn-secondary">Annuler</a>
+</div>
+
+
+</form>
+{% endblock %}

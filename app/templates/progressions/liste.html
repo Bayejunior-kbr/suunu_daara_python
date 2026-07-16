@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Progressions{% endblock %}
+
+{% block content %}
+
+<h1>Liste des progressions</h1>
+
+
+<a href="{{ url_for('progressions.creer') }}" class="btn btn-success mb-2">
+    Nouvelle progression
+</a>
+
+&nbsp;&nbsp;
+
+<a href="{{ url_for('progressions.export_csv', q=q, talibe=talibe_matricule) }}" class="btn btn-outline-success mb-2">
+    Exporter CSV
+</a>
+
+
+<br>
+
+
+<!-- Recherche + filtre par talibé -->
+<form method="GET" action="{{ url_for('progressions.lister') }}" class="row g-2 mb-3">
+
+    <div class="col-auto">
+        <input
+            type="text"
+            class="form-control"
+            name="q"
+            placeholder="Rechercher une sourate ou un talibé"
+            value="{{ q or '' }}"
+        >
+    </div>
+
+    <div class="col-auto">
+        <select name="talibe" class="form-select">
+            <option value="">Tous les talibés</option>
+            {% for t in talibes %}
+            <option value="{{ t.matricule }}" {% if talibe_matricule == t.matricule %}selected{% endif %}>{{ t.prenom }} {{ t.nom }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+            Rechercher
+        </button>
+    </div>
+
+</form>
+
+
+<br>
+
+
+<table class="table table-bordered table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>Talibé</th>
+        <th>Sourate</th>
+        <th>Versets</th>
+        <th>Date</th>
+        <th>Observations</th>
+        <th>Actions</th>
+    </tr>
+
+
+    {% for p in progressions %}
+
+    <tr>
+
+        <td>
+            {{ p.id }}
+        </td>
+
+
+        <td>
+            {{ p.talibe.prenom }}
+            {{ p.talibe.nom }}
+        </td>
+
+
+        <td>
+            {{ p.sourate }}
+        </td>
+
+
+        <td>
+            {{ p.nombre_versets }}
+        </td>
+
+
+        <td>
+            {{ p.date_evaluation }}
+        </td>
+
+
+        <td>
+            {{ p.observations }}
+        </td>
+
+
+        <td>
+
+            <a href="{{ url_for('progressions.modifier', id=p.id) }}" class="btn btn-sm btn-warning">
+                Modifier
+            </a>
+
+
+            <form method="POST" action="{{ url_for('progressions.supprimer', id=p.id) }}" class="d-inline"
+                  onsubmit="return confirm('Voulez-vous supprimer cette progression ?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+            </form>
+
+        </td>
+
+    </tr>
+
+
+    {% else %}
+
+    <tr>
+        <td colspan="7" class="text-center text-muted">
+            Aucune progression trouvée
+        </td>
+    </tr>
+
+
+    {% endfor %}
+
+
+</table>
+{% endblock %}

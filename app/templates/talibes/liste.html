@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Liste des Talibés{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Liste des Talibés</h1>
+        <a href="{{ url_for('talibes.ajouter') }}" class="btn btn-success">+ Ajouter un talibé</a>
+    </div>
+
+    <!-- Formulaire de recherche (nom/prenom + filtre par classe) -->
+    <form method="GET" action="{{ url_for('talibes.liste') }}" class="row g-2 mb-3">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="q" placeholder="Rechercher par nom..." value="{{ q or '' }}">
+        </div>
+        <div class="col-auto">
+            <select name="classe" class="form-select">
+                <option value="">Toutes les classes</option>
+                {% for c in classes %}
+                <option value="{{ c.code }}" {% if classe_code == c.code %}selected{% endif %}>{{ c.libelle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </div>
+        {% if q or classe_code %}
+        <div class="col-auto">
+            <a href="{{ url_for('talibes.liste') }}" class="btn btn-outline-secondary">Réinitialiser</a>
+        </div>
+        {% endif %}
+        <div class="col-auto">
+            <a href="{{ url_for('talibes.export_csv', q=q, classe=classe_code) }}" class="btn btn-outline-success">Exporter en CSV</a>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone tuteur</th>
+                <th>Date de naissance</th>
+                <th>Adresse</th>
+                <th>Classe</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in talibes %}
+            <tr>
+                <td>{{ t.matricule }}</td>
+                <td>{{ t.nom }}</td>
+                <td>{{ t.prenom }}</td>
+                <td>{{ t.telephone_tuteur }}</td>
+                <td>{{ t.date_naissance }}</td>
+                <td>{{ t.adresse }}</td>
+                <td>{{ t.classe.libelle if t.classe else "—" }}</td>
+                <td>
+                    <a href="{{ url_for('talibes.modifier', matricule=t.matricule) }}" class="btn btn-sm btn-warning">Modifier</a>
+
+                    <form method="POST" action="{{ url_for('talibes.supprimer', matricule=t.matricule) }}" class="d-inline"
+                          onsubmit="return confirm('Supprimer ce talibé ?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" class="text-center text-muted">Aucun talibé trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+:root {
+    --couleur-primaire: #1a5276;
+    --couleur-accent: #d4a017;
+    --couleur-fond: #f5f7fa;
+    --couleur-texte: #2c3e50;
+}
+
+body {
+    background: var(--couleur-fond);
+    color: var(--couleur-texte);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+footer {
+    font-size: 0.9rem;
+}

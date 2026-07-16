@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titre }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <h1 class="mb-4">{{ titre }}</h1>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.matricule.label(class="form-label") }}
+                {% if talibe %}
+                    {{ form.matricule(class="form-control", readonly=true) }}
+                    <small class="text-muted">Le matricule ne peut pas être modifié.</small>
+                {% else %}
+                    {{ form.matricule(class="form-control") }}
+                {% endif %}
+                {% for erreur in form.matricule.errors %}
+                    <div class="text-danger">{{ erreur }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.nom.label(class="form-label") }}
+                {{ form.nom(class="form-control") }}
+                {% for erreur in form.nom.errors %}
+                    <div class="text-danger">{{ erreur }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.prenom.label(class="form-label") }}
+                {{ form.prenom(class="form-control") }}
+                {% for erreur in form.prenom.errors %}
+                    <div class="text-danger">{{ erreur }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.date_naissance.label(class="form-label") }}
+                {{ form.date_naissance(class="form-control") }}
+                {% for erreur in form.date_naissance.errors %}
+                    <div class="text-danger">{{ erreur }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.nom_tuteur.label(class="form-label") }}
+                {{ form.nom_tuteur(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.telephone_tuteur.label(class="form-label") }}
+                {{ form.telephone_tuteur(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.adresse.label(class="form-label") }}
+                {{ form.adresse(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.classe_code.label(class="form-label") }}
+                {{ form.classe_code(class="form-select") }}
+                {% for erreur in form.classe_code.errors %}
+                    <div class="text-danger">{{ erreur }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex gap-2">
+                {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('talibes.liste') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

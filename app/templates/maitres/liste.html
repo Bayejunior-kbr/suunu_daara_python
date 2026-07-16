@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Maîtres{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Liste des maîtres</h1>
+        <a class="btn btn-success" href="{{ url_for('maitres.creer') }}">+ Nouveau maître</a>
+    </div>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="q" value="{{ q }}" placeholder="Rechercher par nom, prénom ou matricule...">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </div>
+        {% if q %}
+        <div class="col-auto">
+            <a class="btn btn-outline-secondary" href="{{ url_for('maitres.lister') }}">Réinitialiser</a>
+        </div>
+        {% endif %}
+        <div class="col-auto">
+            <a class="btn btn-outline-success" href="{{ url_for('maitres.exporter', q=q) }}">⬇ Exporter CSV</a>
+        </div>
+    </form>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Classes encadrées</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in maitres %}
+            <tr>
+                <td>{{ m.matricule }}</td>
+                <td>{{ m.prenom }}</td>
+                <td>{{ m.nom }}</td>
+                <td>{{ m.telephone or "—" }}</td>
+                <td>{{ m.classes|length }}</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="{{ url_for('maitres.modifier', matricule=m.matricule) }}">Modifier</a>
+                    <form method="post" action="{{ url_for('maitres.supprimer', matricule=m.matricule) }}"
+                          class="d-inline" onsubmit="return confirm('Supprimer le maître {{ m.nom_complet() }} ?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">Aucun maître trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ 'Modifier' if classe else 'Ajouter' }} une classe</h1>
+
+<form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.code.label }}
+        {% if classe %}
+            {{ form.code(class_="form-control", readonly=true, value=classe.code) }}
+        {% else %}
+            {{ form.code(class_="form-control") }}
+        {% endif %}
+        {% for erreur in form.code.errors %}
+            <div class="text-danger">{{ erreur }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.libelle.label }}
+        {{ form.libelle(class_="form-control") }}
+        {% for erreur in form.libelle.errors %}
+            <div class="text-danger">{{ erreur }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.niveau.label }}
+        {{ form.niveau(class_="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.maitre_matricule.label }}
+        {{ form.maitre_matricule(class_="form-select") }}
+        {% for erreur in form.maitre_matricule.errors %}
+            <div class="text-danger">{{ erreur }}</div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class_="btn btn-primary") }}
+    <a href="{{ url_for('classes.lister') }}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}
