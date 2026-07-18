@@ -1,0 +1,18 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="mb-4 text-center">Connexion</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.nom_utilisateur.label(class="form-label") }}
+      {{ form.nom_utilisateur(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.mot_de_passe.label(class="form-label") }}
+      {{ form.mot_de_passe(class="form-control") }}
+    </div>
+    {{ form.submit(class="btn btn-primary w-100") }}
+  </form>
+</div>
+{% endblock %}

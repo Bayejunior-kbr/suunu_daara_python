@@ -6,6 +6,7 @@ from app.models.classe import Classe
 from app.forms.talibe import TalibeForm
 from app.exceptions import TalibeIntrouvableException, TalibeDejaExistantException
 from app.utils.csv_exporter import exporter_csv
+from flask_login import login_required
 
 talibes_bp = Blueprint("talibes", __name__, url_prefix="/talibes")
 
@@ -17,6 +18,7 @@ def classe_choix(form):
 
 # lister (+ recherche par nom/prenom et filtre par classe, comme demande dans l'enonce)
 @talibes_bp.route("/")
+@login_required
 def liste():
     q = request.args.get("q", "").strip()
     classe_code = request.args.get("classe", "").strip()

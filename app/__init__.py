@@ -1,6 +1,8 @@
 from flask import Flask
-from app.extension import db, migrate,csrf
+from app.extension import db, migrate,csrf,login_manager
 from app.exceptions import DaaraException
+from app.cli import create_admin
+
 
 def create_app():
     app=Flask(__name__)
@@ -10,6 +12,9 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app,db)
     csrf.init_app(app)
+
+    # ...
+    app.cli.add_command(create_admin)
 
     from app.views.main import bp_main
     from app.views.maitre import bp_maitres
@@ -28,4 +33,18 @@ def create_app():
         from flask import flash, redirect, request
         flash(str(erreur), "danger")
         return redirect(request.referrer or "/")
+
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
+    login_manager.login_message = "Merci de vous connecter pour accéder à cette page."
+
+    from app.models.user import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    # enregistrer le blueprint auth
+    from app.views.auth.routes import auth_bp
+    app.register_blueprint(auth_bp)
     return app

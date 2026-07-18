@@ -23,6 +23,14 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('classes.lister') }}">Classes</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('talibes.liste') }}">Talibés</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('progressions.lister') }}">Progressions</a></li>
+
+                    {% if current_user.is_authenticated %}
+    <span class="nav-link text-warning">👤 {{ current_user.nom_utilisateur }}</span>
+    <a class="btn btn-outline-danger btn-sm ms-2" href="{{ url_for('auth.logout') }}">Déconnexion</a>
+  {% else %}
+    <a class="btn btn-outline-primary btn-sm ms-2" href="{{ url_for('auth.login') }}">Connexion</a>
+  {% endif %}
+</div>
                 </ul>
             </div>
         </div>

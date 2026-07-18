@@ -13,6 +13,7 @@ from app.models.talibe import Talibe
 from app.forms.progression import ProgressionForm
 from app.exceptions import ProgressionIntrouvableException
 from app.utils.csv_exporter import exporter_progressions_csv
+from flask_login import login_required
 
 
 bp_progressions = Blueprint(
@@ -27,6 +28,7 @@ bp_progressions = Blueprint(
 # ==========================
 
 @bp_progressions.route("/")
+@login_required
 def lister():
 
     recherche = request.args.get("q")

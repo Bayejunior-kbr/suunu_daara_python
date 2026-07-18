@@ -14,6 +14,7 @@ from app.forms.maitre import MaitreForm
 from app.exceptions import MaitreIntrouvableException, MaitreDejaExistantException, \
     SuppressionImpossibleException
 from app.utils.csv_exporter import exporter_csv
+from flask_login import login_required
 
 bp_maitres = Blueprint("maitres", __name__, url_prefix="/maitres")
 
@@ -31,6 +32,7 @@ def _appliquer_recherche(query, q: str):
 
 
 @bp_maitres.route("/")
+@login_required
 def lister():
     """Liste des maîtres avec recherche optionnelle par nom/prénom/matricule."""
     q = request.args.get("q", "").strip()

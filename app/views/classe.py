@@ -1,5 +1,6 @@
 # app/views/classe.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 
 from app.extension import db
 from app.models.classe import Classe
@@ -15,6 +16,7 @@ bp_classes = Blueprint('classes', __name__, url_prefix='/classes')
 
 
 @bp_classes.route('/')
+@login_required
 def lister():
     q = request.args.get('q', '').strip()
 
